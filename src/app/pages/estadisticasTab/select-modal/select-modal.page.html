@@ -1,0 +1,40 @@
+<ion-content style="height: 80%">
+
+  <ion-grid *ngIf="this.status == 0">
+    <ion-row>
+      <ion-col>
+        <h1 class="ion-text-center"> Lista de usuarios </h1>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let e of this.entrenados">
+      <ion-col>  </ion-col>
+      <ion-col size=10>
+        <div class="trainer-button" (click)="this.selecionEntrenado(e)">
+          <h3 style="margin: 0; font-weight: bold"> {{e.nombre + e.apellidos}}  </h3>
+          <p style="margin: 0; font-weight: bold"> {{e.rut}}  </p>
+        </div>
+
+      </ion-col>
+      <ion-col>  </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="this.status == 1">
+    <ion-row>
+      <ion-col>
+        <h1 class="ion-text-center"> Lista de rutinas </h1>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let r of this.rutinas">
+      <ion-col>  </ion-col>
+      <ion-col size=10>
+        <div class="trainer-button" (click)="this.selecionRutina(r)">
+          <h3 style="margin: 0; font-weight: bold"> {{ r.nombre }}  </h3>
+          <p style="margin: 0; font-weight: bold"> {{ this.entrenado.nombre + this.entrenado.apellidos }}  </p>
+        </div>
+      </ion-col>
+      <ion-col>  </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

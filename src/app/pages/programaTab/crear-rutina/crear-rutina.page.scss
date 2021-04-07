@@ -1,0 +1,90 @@
+ion-content ion-toolbar {
+  --background: translucent;
+  --ion-background-color: #fff;
+}
+
+ion-content, ion-header{
+  --background: translucent;
+  --ion-background-color: #fff;
+  background-color: #fff;
+}
+
+ion-title{
+  color: #222428;
+  font-weight: bold;
+}
+
+.subtitle{
+  color: #222428;
+  margin: auto 1.5rem;
+}
+
+.number {
+  text-align: center;
+  border: solid 2px #000;
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+  margin: auto;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #000;
+  &.disconnected {
+    color: red;
+  }
+}
+
+.pelota {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  opacity: 30%;
+}
+
+.trainer-button {
+  width: 100%;
+  background-color: #d33939;
+  color: #FFF;
+  border-radius: 1rem;
+  padding: .5rem;
+  text-align: center;
+}
+
+.ligth-background-color{
+  --background: #f4f5f8;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.form-control {
+  margin: 10px;
+}
+
+.programa-button {
+  width: 100%;
+  background-color: #d33939;
+  color: #FFF;
+  border-radius: 1rem;
+  padding: .5rem;
+  text-align: center;
+  &.verde {
+    padding: .25rem;
+    background-color: #3E8C49;
+  }
+  &.amarillo {
+    padding: .25rem;
+    background-color: #DBDB47;
+  }
+  &.rojo {
+    padding: .25rem;
+    background-color: #EA3423;
+  }
+  &.morado {
+    padding: .25rem;
+    background-color: #68349A;
+  }
+  &.azul {
+    padding: .25rem;
+    background-color: #52B3E6;
+  }
+}

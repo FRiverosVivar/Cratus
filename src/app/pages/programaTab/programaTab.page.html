@@ -1,0 +1,283 @@
+<ion-header [translucent]="true">
+  <ion-toolbar *ngIf="tipo == 0" class="ligth-background-color bottom-border-radius">
+    <ion-title>
+      Programas
+    </ion-title>
+    <h5 class="subtitle"> Selecciona modo de uso </h5>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="tipo == 1" class="ligth-background-color bottom-border-radius">
+    <ion-buttons slot="start" (click)="seleccionarPrograma(0)">
+      <ion-button *ngIf="false"> Volver </ion-button>
+      <ion-back-button defaultHref="tabs/programaTab"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Manual
+    </ion-title>
+    <h5 class="subtitle"> Selecciona modulo - color </h5>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="tipo == 2" class="ligth-background-color bottom-border-radius">
+    <ion-buttons slot="start" (click)="seleccionarPrograma(0)">
+      <ion-back-button defaultHref="tabs/programaTab"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Estatico
+    </ion-title>
+    <h5 class="subtitle">  </h5>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="tipo == 3" class="ligth-background-color bottom-border-radius">
+    <ion-buttons slot="start" (click)="seleccionarPrograma(0)">
+      <ion-back-button defaultHref="tabs/programaTab"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Aleatorio
+    </ion-title>
+    <h5 class="subtitle">  </h5>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="tipo == 4" class="ligth-background-color bottom-border-radius">
+    <ion-buttons slot="start" (click)="seleccionarPrograma(0)">
+      <ion-back-button defaultHref="tabs/programaTab"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Seleccion de rutina
+    </ion-title>
+    <h5 class="subtitle"> Selecciona una rutina </h5>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="tipo == 5" class="ligth-background-color bottom-border-radius">
+    <ion-buttons slot="start" (click)="seleccionarPrograma(4)">
+      <ion-back-button defaultHref="tabs/programaTab"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{rutinaPersonalizada.nombre}}
+    </ion-title>
+    <h5 class="subtitle"> {{rutinaPersonalizada.steps}} ACC </h5>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <!-- Seleccion de programa -->
+  <ion-grid class="mybody bg-transparent" *ngIf="tipo == 0">
+    <ion-row>
+      <ion-col size="12">
+        <ion-select style="color:#000; border: solid 1px red; border-radius: 10px" placeholder="Seleccione a un usuario" (ionChange)="seleccionarEntrenado($event)">
+          <ion-select-option style="font-size: 10px" *ngFor="let entrenado of entrenados" [value]="entrenado">
+            {{entrenado.nombre + " " + entrenado.apellidos}}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <div [ngClass]="['programa-button', !entrenado ? 'disabled':'']" (click)="seleccionarPrograma(1)">
+          <img src="assets/imgs/programa/programa_manual.png" style="margin: auto; height: 50px;">
+          <h3 style="margin: 0; font-weight: bold"> Programa Manual </h3>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <div [ngClass]="['programa-button', !entrenado ? 'disabled':'']" (click)="seleccionarPrograma(2)">
+          <img src="assets/imgs/programa/programa_estatico.png" style="margin: auto; height: 50px;">
+          <h3 style="margin: 0; font-weight: bold"> Programa Estatico </h3>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <div [ngClass]="['programa-button', !entrenado ? 'disabled':'']" (click)="seleccionarPrograma(3)">
+          <img src="assets/imgs/programa/programa_aleatorio.png" style="margin: auto; height: 50px;">
+          <h3 style="margin: 0; font-weight: bold"> Programa Aleatorio </h3>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row size="12">
+      <ion-col size="12">
+        <div [ngClass]="['programa-button', !entrenado ? 'disabled':'']" (click)="seleccionarPrograma(4)">
+          <img src="assets/imgs/programa/programa_rutina.png" style="margin: auto; height: 50px;">
+          <h3 style="margin: 0; font-weight: bold"> Selección de Rutina </h3>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Programa manual -->
+  <ion-grid class="mybody bg-transparent" *ngIf="tipo == 1">
+    <ion-row style="background-color: #d7d8da; border-radius: 1rem">
+      <ion-col size="12">
+        <h3 style="text-align: center; color: #000; margin: 0px" > Control modular </h3>
+      </ion-col>
+      <ion-col size="12" *ngIf="blesService.devices.length > 0">
+        <ion-grid *ngFor="let d of blesService.devices; let i = index" [attr.data-index]="i">
+          <ion-row>
+            <ion-col size="2">
+              <p class="number" *ngIf="d['isConnected']"> {{i+1}} </p>
+              <p class="number disconnected" *ngIf="!d['isConnected']"> {{i+1}} </p>
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDevice(d,'verde')" src="assets/imgs/programa/verde.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDevice(d,'amarillo')"  src="assets/imgs/programa/amarillo.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDevice(d,'rojo')"  src="assets/imgs/programa/rojo.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDevice(d,'morado')"  src="assets/imgs/programa/morado.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDevice(d,'azul')" src="assets/imgs/programa/azul.png">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Programa Estatico -->
+  <ion-grid class="mybody bg-transparent" *ngIf="tipo == 2">
+    <ion-row style="background-color: #d7d8da; border-radius: 1rem">
+      <ion-col size="12">
+        <h3 style="text-align: center; color: #000; margin: 0px" > Control modular </h3>
+      </ion-col>
+      <ion-col size="12" *ngIf="blesService.devices.length > 0">
+        <ion-grid *ngFor="let d of blesService.devices; let i = index" [attr.data-index]="i">
+          <ion-row>
+            <ion-col size="2">
+              <p class="number"> {{i+1}} </p>
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDeviceEstatic(d,'verde')" src="assets/imgs/programa/verde.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDeviceEstatic(d,'amarillo')"  src="assets/imgs/programa/amarillo.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDeviceEstatic(d,'rojo')"  src="assets/imgs/programa/rojo.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDeviceEstatic(d,'morado')"  src="assets/imgs/programa/morado.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="writetoDeviceEstatic(d,'azul')" src="assets/imgs/programa/azul.png">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Programa Aleatorio -->
+  <ion-grid class="mybody bg-transparent" *ngIf="tipo == 3">
+    <ion-row style="border-radius: 1rem">
+      <ion-col size="12">
+        <h3 style="text-align: center; color: #000; margin: 0px" > Seleccion de color </h3>
+      </ion-col>
+      <ion-col size="1"> </ion-col>
+      <ion-col size="2">
+        <img [className]="colores.includes('verde') ? 'pelota selected' : 'pelota'" (click)="coloresF('verde')"
+        src="assets/imgs/programa/verde.png">
+      </ion-col>
+      <ion-col size="2">
+        <img [className]="colores.includes('amarillo') ? 'pelota selected' : 'pelota'" (click)="coloresF('amarillo')"
+        src="assets/imgs/programa/amarillo.png">
+      </ion-col>
+      <ion-col size="2">
+        <img [className]="colores.includes('rojo') ? 'pelota selected' : 'pelota'" (click)="coloresF('rojo')"
+        src="assets/imgs/programa/rojo.png">
+      </ion-col>
+      <ion-col size="2">
+        <img [className]="colores.includes('morado') ? 'pelota selected' : 'pelota'" (click)="coloresF('morado')"
+        src="assets/imgs/programa/morado.png">
+      </ion-col>
+      <ion-col size="2">
+        <img [className]="colores.includes('azul') ? 'pelota selected' : 'pelota'" (click)="coloresF('azul')"
+        src="assets/imgs/programa/azul.png">
+      </ion-col>
+      <ion-col size="1"> </ion-col>
+    </ion-row>
+    <br/>
+    <br/>
+    <ion-row style="border-radius: 1rem" *ngIf="rutina.length == 0">
+      <ion-col size="12">
+        <h3 style="text-align: center; color: #000; margin: 0px" > Acciones: </h3>
+      </ion-col>
+      <ion-col size="4"> </ion-col>
+      <ion-col size="4">
+        <input style="color: #000; text-align: center; font-size: 4rem; font-weight: 500; width: 100%" [value]="acciones" (change)="accionesChange($event)"/>
+      </ion-col>
+      <ion-col size="4"> </ion-col>
+    </ion-row>
+
+    <ion-row style="border-radius: 1rem" *ngIf="rutina.length != 0">
+      <ion-col size="12">
+        <h3 style="text-align: center; color: #000; margin: 0px" > Accion: </h3>
+      </ion-col>
+      <ion-col size="4"> </ion-col>
+      <ion-col size="4">
+        <h1 style="text-align: center; color: #000; margin: 0px" > {{rutina.length}} </h1>
+      </ion-col>
+      <ion-col size="4"> </ion-col>
+    </ion-row>
+
+    <br/>
+    <ion-button expand="block" color="danger" [disabled]="acciones == 0 || rutina.length != 0" (click)="randomPrograma()"> Iniciar </ion-button>
+    <br/>
+  </ion-grid>
+
+  <!-- Seleccion de rutina -->
+  <ion-grid class="mybody bg-transparent" *ngIf="tipo == 4">
+    <ion-row>
+      <ion-col size="12" *ngFor="let r of rutinas; index as i">
+        <div [ngClass]="['programa-button', (r.device_number > this.blesService.devices.length) ? 'disabled': '']"
+          (click)="seleccionarPersonalizada(r)" *ngIf="r.steps > 0">
+          <h3 style="font-weight: bold; margin: 5px auto 2px"> {{ r.nombre }} </h3>
+          <p style="margin: 0 auto 5px"> - {{ r.steps }} AAC - </p>
+        </div>
+        <br *ngIf="r.steps > 0">
+      </ion-col>
+
+      <ion-col size="3"> </ion-col>
+      <ion-col size="6">
+        <ion-button expand="block" color="danger" (click)="crearRutina()">
+          Crear Rutina
+        </ion-button>
+      </ion-col>
+      <ion-col size="3"> </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Rutina personalizada -->
+  <ion-grid class="mybody bg-transparent" *ngIf="tipo == 5">
+    <ion-row>
+      <ion-col size="8"> </ion-col>
+      <ion-col size="4">
+        <ion-button expand="block" color="danger" (click)="iniciarPersonalizada()" [disabled]="rutinaPersonalizada.device_number > this.blesService.devices.length">
+          Iniciar
+        </ion-button>
+      </ion-col>
+      <ion-col size="7" style="margin: auto" *ngFor="let step of rutinaPersonalizada['pasos_attributes']; index as i">
+        <div [ngClass]="['programa-button', step.color]">
+          <p style="margin: 2px auto"> {{ i+1 }}- Modulo {{ step.dispositivo }} </p>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button *ngIf="rutina.length == rutinaPersonalizada['pasos_attributes'].length" expand="block" color="danger" (click)="terminarRutina()" [disabled]="pendiente"> Terminar </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
+  <ion-button *ngIf="rutina.length > 0 && tipo == 1" expand="block" color="danger" (click)="terminarRutina()" [disabled]="pendiente"> Terminar </ion-button>
+  <ion-button *ngIf="rutina.length > 0 && tipo == 2" expand="block" color="danger" (click)="terminarEstatica()"> Terminar </ion-button>
+  <ion-button *ngIf="rutina.length > 0 && tipo == 3" expand="block" color="danger" (click)="terminarRutina()" [disabled]="rutina.length < acciones"> Terminar </ion-button>
+
+</ion-content>

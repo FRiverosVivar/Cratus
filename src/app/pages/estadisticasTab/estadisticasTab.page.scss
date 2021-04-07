@@ -1,0 +1,18 @@
+ion-content ion-toolbar {
+  --background: translucent;
+}
+
+.mybody {
+  margin: .5rem;
+}
+
+.programa-button {
+  width: 100%;
+  background-color: #d33939;
+  color: #FFF;
+  border-radius: 1rem;
+  padding: .5rem;
+  text-align: center;
+}
+
+@import '~bootstrap/dist/css/bootstrap.min.css';

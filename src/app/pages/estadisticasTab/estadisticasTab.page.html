@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Estadisticas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Estadisticas Tab</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid class="mybody">
+    <ion-row>
+      <ion-col size="12">
+        <div class="programa-button" (click)="this.seleccionModal()">
+          <h4 style="margin: 0; font-weight: bold"> Ver Estadisticas </h4>
+          <p style="margin: 0; font-weight: bold"> Usuario / Rutina </p>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" *ngIf="this.dataService.getEntrenado()!=null && this.dataService.getRutina() != null">
+        <h5 class="ion-text-center" style="margin: 0; font-weight: bold"> {{ this.dataService.getEntrenado().nombre + this.dataService.getEntrenado().apellidos }} </h5>
+        <p class="ion-text-center" style="margin: 0; font-weight: bold"> {{ this.dataService.getRutina().nombre }} </p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="this.dataService.getEstadisticas() != null">
+      <ion-col size="12" *ngIf="this.dataService.getEstadisticas().length == 0" >
+        <h6 class="ion-text-center" style="margin: 0; font-weight: bold">
+          {{ this.dataService.getEntrenado().nombre + this.dataService.getEntrenado().apellidos + " no registra datos con esta rutina"}}
+        </h6>
+      </ion-col>
+      <ion-col size="12" *ngIf="this.dataService.getEstadisticas().length > 0">
+        <div class="table-responsive-sm">
+          <table class="table" style="font-size: .75rem ">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col"> # </th>
+                <th scope="col"> Mejor </th>
+                <th scope="col"> Peor </th>
+                <th scope="col"> Prom </th>
+                <th scope="col"> Total </th>
+                <th scope="col"> Pasos </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let e of this.dataService.getEstadisticas(); let i = index">
+                <th scope="row" style="padding-top: .2rem; padding-bottom: .2rem"> {{i+1}} </th>
+                <td style="padding-top: .25rem; padding-bottom: .25rem"> {{ (e.mejor/1000).toFixed(2) }} </td>
+                <td style="padding-top: .25rem; padding-bottom: .25rem"> {{ (e.peor/1000).toFixed(2) }} </td>
+                <td style="padding-top: .25rem; padding-bottom: .25rem"> {{ (e.promedio/1000).toFixed(2) }} </td>
+                <td style="padding-top: .25rem; padding-bottom: .25rem"> {{ (e.tiempo_total/1000).toFixed(2) }} </td>
+                <td style="padding-top: .25rem; padding-bottom: .25rem"> {{ e.total_pasos }} </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="this.lineChartData != null" class="chart-wrapper">
+    <canvas baseChart
+      [datasets]="lineChartData"
+      [labels]="lineChartLabels"
+      [options]="lineChartOptions"
+      [colors]="lineChartColors"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      [plugins]="lineChartPlugins">
+    </canvas>
+  </div>
+</ion-content>

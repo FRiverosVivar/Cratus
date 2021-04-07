@@ -1,0 +1,37 @@
+<ion-content class="background-image">
+
+  <ion-grid style="height: 100%">
+    <ion-row>
+      <ion-col>
+        <img src="assets/imgs/logo_inicio.png" style="margin: auto; width: 75px; display: block;">
+      </ion-col>
+    </ion-row>
+    <ion-row style="height: 100%;">
+      <ion-col> </ion-col>
+      <ion-col size="10" style="margin: auto">
+        <div class="iniciar-sesion">
+          <form [formGroup]="loginForm" (ngSubmit)="logear()" (clickOutside)="cancel()" #ngForm="ngForm">
+            <p class="label"> Usuario </p>
+            <input type="text" formControlName="username" class="form-control"/>
+            <div *ngIf="ngForm.submitted && f.username.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">Se require nombre de usuario</div>
+            </div>
+
+            <p class="label"> Contraseña </p>
+            <input type="password" formControlName="password" class="form-control" />
+            <div *ngIf="ngForm.submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">Se requiere contraseña</div>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <ion-button color="danger" expand="block" type="submit">Ingresar</ion-button>
+              <ion-button color="danger" expand="block" type="reset" (click)='cancel()'>Cancel</ion-button>
+            </div>
+          </form>
+        </div>
+      </ion-col>
+      <ion-col> </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

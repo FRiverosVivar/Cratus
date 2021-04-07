@@ -1,0 +1,11 @@
+ionic cordova build android --prod --release
+
+# traer app-release-unsigned.apk a la rais del proyecto
+
+# Primera vez, generar key
+keytool -genkey -v -keystore my-release-key.keystore -alias cratusApp -keyalg RSA -keysize 2048 -validity 10000
+keytool -importkeystore -srckeystore my-release-key.keystore -destkeystore my-release-key.keystore -deststoretype pkcs12
+
+#cratus2020
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore app-release-unsigned.apk cratusApp
+~/Library/Android/sdk/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk Cratus.apk

@@ -1,0 +1,40 @@
+.background-image{
+    --background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(src/assets/imgs/fondo_sin_logos.png) 0 0/100% 100% no-repeat;
+}
+
+.iniciar-sesion{
+  background-color: #2D3440;
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+p{
+  margin-bottom: 0;
+}
+
+input{
+  padding: .25rem ;
+  border-radius: .5rem;
+}
+
+button{
+  margin: auto;
+}
+
+.label {
+  margin-top: .2rem;
+  color: #f4f5f8;
+}
+
+.form-control{
+  width: 100%;
+  background-color: #fff;
+  padding: .1rem;
+  color: #000;
+}
+
+.invalid-feedback{
+  color: red;
+}

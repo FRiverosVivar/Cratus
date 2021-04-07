@@ -1,0 +1,7 @@
+{
+  "name": "cratusApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

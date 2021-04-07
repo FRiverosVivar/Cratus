@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="ligth-background-color bottom-border-radius">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/programaTab"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Crear Rutina
+    </ion-title>
+    <h5 class="subtitle"> Seleccione el paso a enlistar </h5>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <h3 style="text-align: center; color: #000; margin: 0px" > Control modular </h3>
+      </ion-col>
+      <ion-col size="12" *ngIf="blesService.devices.length > 0">
+        <ion-grid *ngFor="let d of blesService.devices; let i = index" [attr.data-index]="i">
+          <ion-row>
+            <ion-col size="2">
+              <p class="number"> {{i+1}} </p>
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="ingresarPaso(i+1,'verde')" src="assets/imgs/programa/verde.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="ingresarPaso(i+1,'amarillo')"  src="assets/imgs/programa/amarillo.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="ingresarPaso(i+1,'rojo')"  src="assets/imgs/programa/rojo.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="ingresarPaso(i+1,'morado')"  src="assets/imgs/programa/morado.png">
+            </ion-col>
+            <ion-col size="2">
+              <img class="pelota" (click)="ingresarPaso(i+1,'azul')" src="assets/imgs/programa/azul.png">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="9">
+        <input type="text" class="form-control"  placeholder="Agrega Nombre" [(ngModel)]="nombreRutina" #ctrl="ngModel" required/>
+      </ion-col>
+      <ion-col size="3">
+        <ion-button expand="block" color="danger" [disabled]="rutina.length == 0 || blesService.devices.length == 0 || nombreRutina == ''" (click)="crearRutina()">
+          Guardar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5" *ngFor="let step of rutina; index as i; even as isEven" style="margin: auto">
+        <div [ngClass]="['programa-button', step.color]" (click)="confirmacionAlert(step, i)">
+          <p style="margin: 2px auto"> {{ i+1 }}- Modulo {{ step.dispositivo }} </p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
